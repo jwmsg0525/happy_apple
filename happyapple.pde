@@ -22,6 +22,10 @@ int ball_cnt = 1;
 ////////POINT SETTING////////
 int current_point = 0;
 
+////////SOUND////////
+import processing.sound.*;
+SoundFile sound;
+
 
 class Ball {
   float s_apple_x = 30;
@@ -31,7 +35,7 @@ class Ball {
   float limit_y = p_box_y;
   float volume = 1;
   float speed = 0;
-  float acc = 0.4;
+  float acc = 0.2;
 
   Ball(){
     this.init();
@@ -64,7 +68,7 @@ void setup(){
   smooth();
   ///SET BOX
   box = loadImage("basket.png");
-  
+  sound = new SoundFile(this, "ring.mp3");
   ///SET BALLS
   balls = new Ball[ball_cnt];
   for(int i = 0 ; i < ball_cnt; i++){
@@ -95,6 +99,7 @@ void draw(){
     if(balls[i].is_bottom()){
       if(balls[i].is_inbound()){
         current_point++;
+        sound.play();
       }else{
         current_point--;
       }
